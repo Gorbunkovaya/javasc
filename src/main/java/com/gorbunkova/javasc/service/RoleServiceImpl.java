@@ -48,18 +48,16 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Set<Role> findByRoleSet(String roles) {
-        String[] role = roles.split(",");
-        Set<Role> roles1 = new HashSet<>();
-        for (String rollles : role) {
-            if (rollles.equals("USER")) {
-                roles1.add(getRoleByName("ROLE_USER"));
-            } else if (rollles.equals("ADMIN")) {
-                roles1.add(getRoleByName("ROLE_ADMIN"));
-            } else {
-                roles1.add(getRoleByName("ROLE_USER"));
+    public Set<Role> getByRoles(String role) {
+        String[] roles = role.split("_");
+        Set<Role> authRole = new HashSet<>();
+        for (String roless : roles) {
+            if (roless.equals("ADMIN")) {
+                authRole.add(getRoleByName("ROLE_ADMIN"));
+            } else if (roless.equals("USER")) {
+                authRole.add(getRoleByName("ROLE_USER"));
             }
         }
-        return roles1;
+        return authRole;
     }
 }

@@ -17,5 +17,5 @@ public interface RoleService {
 
     Role getRoleByName(String s);
 
-    Set<Role> findByRoleSet(String s);
+    Set <Role> getByRoles(String s);
 }

@@ -19,7 +19,6 @@ function getUsersList() {
                 cell3.innerHTML = user.email;
                 let cell4 = row.insertCell();
                 cell4.innerHTML =  listRoles(user).textContent;
-
                 let cell5 = row.insertCell();
                 cell5.innerHTML =
                     '<button type="button" onclick="getModalEdit(' + user.id + ')" class="btn btn-primary btn-sm">Edit</button>';
@@ -109,7 +108,7 @@ function getModalEdit(id) {
                 '                        <label>Role</label>' +
                 '                        <select id="editRoles" name="roles" multiple size="2" required ' +
                 '                               class="form-control form-control-sm">' +
-                '                            <option value="ADMIN">ADMIN</option>' +
+                '                            <option value="ADMIN"' + adminSelect + '>ADMIN</option>' +
                 '                            <option value="USER"' + userSelect + '>USER</option>' +
                 '                        </select>' +
                 '                    </p>' +
@@ -133,34 +132,32 @@ function getModalEdit(id) {
 function editUser() {
 
     let form = window.formEditUser.editRoles;
-    let new_Roles = "";
 
+    let userRole = "";
     let rolesList = document.createElement('ul');
-
     for (let i = 0; i < form.length; i++) {
         let option = form.options[i];
         let role = document.createElement('li');
         if (option.selected) {
-            new_Roles = new_Roles.concat(option.value + (i !== (form.length - 1) ? "," : ""));
-
+            userRole = userRole.concat(option.value + "_");
             role.textContent = option.value + " ";
             rolesList.appendChild(role);
         }
     }
 
-    console.log(new_Roles);
+    console.log(userRole);
 
     let id = window.formEditUser.editId.value;
 
-    fetch('http://localhost:8080/admin/update/'+ new_Roles, {
+    fetch('http://localhost:8080/admin/update/'+ userRole, {
         method: 'PUT',
         body: JSON.stringify({
             id: window.formEditUser.editId.value,
-            name: window.formEditUser.editLogin.value,
+            login: window.formEditUser.editLogin.value,
             age: window.formEditUser.editAge.value,
             email: window.formEditUser.editEmail.value,
             password: window.formEditUser.editPassword.value,
-            newCheckedRoles: new_Roles
+            role: userRole
         }),
         headers: {"Content-type": "application/json; charset=UTF-8"}
     })
@@ -268,28 +265,28 @@ function deleteUser(id) {
         });
 }
 
-function newUser() {
+function createUser() {
     let form = window.formNewUser.newRoles;
-    let new_Roles = "";
+    let userRole = "";
     let rolesList = document.createElement('ul');
     for (let i = 0; i < form.length; i++) {
         let option = form.options[i];
         let role = document.createElement('li');
         if (option.selected) {
-            new_Roles = new_Roles.concat(option.value + (i !== (form.length - 1) ? "," : ""));
+            userRole = userRole.concat(option.value + "_");
             role.textContent = option.value + " ";
             rolesList.appendChild(role);
         }
     }
 
-    fetch('http://localhost:8080/admin/create/' + new_Roles, {
+    fetch('http://localhost:8080/admin/create/' + userRole, {
         method: 'POST',
         body: JSON.stringify({
-            name: window.formNewUser.newLogin.value,
+            login: window.formNewUser.newLogin.value,
             age: window.formNewUser.newAge.value,
             email: window.formNewUser.newEmail.value,
             password: window.formNewUser.newPassword.value,
-            newCheckedRoles: new_Roles
+            role: userRole
         }),
         headers: {"Content-type": "application/json; charset=UTF-8"}
     })
@@ -315,4 +312,6 @@ function newUser() {
           //  $('#NewUserCreated').modal();
         });
 }
+
+
 

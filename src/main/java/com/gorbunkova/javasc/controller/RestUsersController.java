@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,10 +27,15 @@ public class RestUsersController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/admin/authorities")
-    public ResponseEntity<?> getAuthorizedUser(@AuthenticationPrincipal User user) {
+    @GetMapping("/user/authorities")
+    public ResponseEntity<?> authorities(@AuthenticationPrincipal User user) {
         return ResponseEntity.ok().body(user);
     }
+
+   // @GetMapping("admin/allroles")
+  //  public List<Role> getAllRoles() {
+  //      return roleService.getAllRoles();
+  //  }
 
     @GetMapping("/admin/all")
     public ResponseEntity<List<User>> getAllUser() {
@@ -42,20 +48,18 @@ public class RestUsersController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/admin/create/{new_Roles}")
-    public ResponseEntity<User> create(@RequestBody User user, @PathVariable(required = false, name = "new_Roles") String roleString) {
-        Set<Role> setRoleController;
-        setRoleController = roleService.findByRoleSet(roleString);
-        user.setRoles(setRoleController);
+    @PostMapping("/admin/create/{userRole}")
+    public ResponseEntity<User> create(@RequestBody User user, @PathVariable(required = false, name = "userRole") String rolesBox) {
+        Set <Role> roles = roleService.getByRoles(rolesBox);
+        user.setRoles(roles);
         userService.createUser(user);
         return ResponseEntity.ok().body(user);
     }
 
-    @PutMapping("/admin/update/{new_Roles}")
-    public ResponseEntity<?> update(@RequestBody User user, @PathVariable(required = false, name = "new_Roles") String roleString) {
-        Set<Role> setRoleController;
-        setRoleController = roleService.findByRoleSet(roleString);
-        user.setRoles(setRoleController);
+    @PutMapping("/admin/update/{userRole}")
+    public ResponseEntity<?> update(@RequestBody User user, @PathVariable(required = false, name = "userRole") String rolesBox) {
+        Set <Role> roles = roleService.getByRoles(rolesBox);
+        user.setRoles(roles);
         userService.updateUser(user);
         return ResponseEntity.ok().body(user);
     }

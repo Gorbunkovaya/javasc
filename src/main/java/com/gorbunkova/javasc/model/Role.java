@@ -1,10 +1,13 @@
 package com.gorbunkova.javasc.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Set;
 
+//@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
@@ -14,16 +17,17 @@ public class Role implements GrantedAuthority {
     @Column
     private String role;
 
-    @OneToMany (mappedBy = "roles")
+    @ManyToMany (mappedBy = "roles", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<User> users;
 
-    public Set<User> getUsers() {
-        return users;
-    }
+  //  public Set<User> getUsers() {
+   //     return users;
+   // }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
+   // public void setUsers(Set<User> users) {
+   //     this.users = users;
+   // }
 
     public Role() {
 
