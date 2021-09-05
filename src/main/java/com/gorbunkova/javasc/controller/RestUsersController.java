@@ -32,11 +32,6 @@ public class RestUsersController {
         return ResponseEntity.ok().body(user);
     }
 
-   // @GetMapping("admin/allroles")
-  //  public List<Role> getAllRoles() {
-  //      return roleService.getAllRoles();
-  //  }
-
     @GetMapping("/admin/all")
     public ResponseEntity<List<User>> getAllUser() {
         return ResponseEntity.ok().body(userService.getUsersList());

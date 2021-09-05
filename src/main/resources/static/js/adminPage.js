@@ -309,7 +309,6 @@ function createUser() {
             window.formNewUser.newPassword.value = "";
             window.formNewUser.newRoles.value = "";
 
-          //  $('#NewUserCreated').modal();
         });
 }
 
