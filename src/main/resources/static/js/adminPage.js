@@ -22,7 +22,6 @@ function getUsersList() {
                 let cell5 = row.insertCell();
                 cell5.innerHTML =
                     '<button type="button" onclick="getModalEdit(' + user.id + ')" class="btn btn-primary btn-sm">Edit</button>';
-
                 let cell6 = row.insertCell();
                 cell6.innerHTML =
                     '<button type="button" onclick="getModalDelete(' + user.id + ')" class="btn btn-danger btn-sm">Delete</button>';
@@ -45,10 +44,8 @@ function getModalEdit(id) {
     fetch('http://localhost:8080/admin/getUser/' + id)
         .then(response => response.json())
         .then(user => {
-
             let adminSelect = "";
             let userSelect = "";
-
             for (let i = 0; i < user.roles.length; i++) {
                 if (user.roles[i].role === "ADMIN") {
                     adminSelect = "selected";
@@ -125,14 +122,12 @@ function getModalEdit(id) {
                 '</div>';
 
             $("#modalEdit").modal();
-
         });
 }
 
 function editUser() {
 
     let form = window.formEditUser.editRoles;
-
     let userRole = "";
     let rolesList = document.createElement('ul');
     for (let i = 0; i < form.length; i++) {
@@ -183,7 +178,6 @@ function getModalDelete(id) {
 
             let adminSelect = "";
             let userSelect = "";
-
             for (let i = 0; i < user.roles.length; i++) {
                 if (user.roles[i].role === "ADMIN") {
                     adminSelect = "selected";
@@ -249,7 +243,7 @@ function getModalDelete(id) {
                 '        </div>' +
                 '    </div>' +
                 '</div>';
-
+        
             $("#modalDelete").modal();
 
         });
