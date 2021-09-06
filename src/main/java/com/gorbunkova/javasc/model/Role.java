@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
 import java.util.Set;
 
-//@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
@@ -20,14 +19,6 @@ public class Role implements GrantedAuthority {
     @ManyToMany (mappedBy = "roles", fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<User> users;
-
-  //  public Set<User> getUsers() {
-   //     return users;
-   // }
-
-   // public void setUsers(Set<User> users) {
-   //     this.users = users;
-   // }
 
     public Role() {
 
