@@ -1,7 +1,5 @@
 package com.gorbunkova.javasc.service;
 
-
-
 import com.gorbunkova.javasc.model.User;
 
 import java.util.List;
